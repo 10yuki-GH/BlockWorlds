@@ -17,10 +17,8 @@
     .picker{display:grid;grid-template-columns:1fr auto;gap:12px;max-width:680px;margin:0 auto 38px;padding:18px;background:var(--panel);border:2px solid var(--line);box-shadow:8px 8px 0 #090d13}
     select,.download{min-height:58px;border:0;border-radius:0;font:700 17px inherit}.download{display:grid;place-items:center;padding:0 28px;background:var(--grass2);color:white;text-decoration:none;box-shadow:inset 0 -6px 0 #1c6827;transition:transform .1s,filter .1s}.download:hover{filter:brightness(1.14);transform:translateY(-2px)}.download:active{transform:translateY(3px);box-shadow:inset 0 -3px 0 #1c6827}
     select{width:100%;padding:0 16px;background:#edf3f8;color:#17202c}
-    .versions{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{position:relative;padding:25px;background:var(--panel);border:2px solid var(--line);box-shadow:6px 6px 0 #090d13}.card.latest{border-color:var(--grass)}
-    .tag{position:absolute;right:14px;top:14px;padding:5px 8px;background:var(--grass2);font-size:11px}.version{margin:0 0 5px;font-size:24px}.date{margin-bottom:12px;color:#6f8294;font-size:11px}.card p{min-height:42px;margin:0 0 20px;color:var(--muted);line-height:1.5;font-size:13px}.small-download{color:#7fe17b;text-decoration:none;border-bottom:1px solid #7fe17b;padding-bottom:3px}.small-download:hover{color:white}
     .guide{margin-top:28px;padding:26px;background:var(--panel);border:2px solid var(--line);box-shadow:6px 6px 0 #090d13;color:var(--muted);font-size:13px;line-height:1.6}.guide h2{color:#7fe17b;margin:0 0 10px;font-size:21px}.guide h3{color:#dfe7ef;margin:20px 0 6px;font-size:15px}.guide code{color:#e5f1ff}.guide pre{overflow:auto;padding:14px;background:#0b1119;border:1px solid #2b3a4c;color:#dfe7ef;font-size:12px;line-height:1.45}footer{text-align:center;margin-top:38px;color:var(--muted);font-size:12px}.mac{color:#dfe7ef}
-    @media(max-width:640px){main{padding-top:28px}.picker{grid-template-columns:1fr}.download{min-height:56px}.versions{grid-template-columns:1fr}h1{letter-spacing:-2px}.card p{min-height:0}}
+    @media(max-width:640px){main{padding-top:28px}.picker{grid-template-columns:1fr}.download{min-height:56px}h1{letter-spacing:-2px}}
   </style>
 </head>
 <body>
@@ -42,24 +40,22 @@
       <a id="download" class="download" href="downloads/BLWS-Alpha-0.5.dmg" download>DOWNLOAD .DMG</a>
     </section>
 
-    <section class="versions" aria-label="All versions">
-      <article class="card latest"><span class="tag">LATEST DMG</span><h2 class="version">BLWS Alpha 0.5</h2><div class="date">DMG released September 24, 2026 · Windows EXE is in development</div><p>BLWS is the new name of the game previously called BlockWorlds. This update adds improved text input, chat, commands, boats, and the Alpha 0.5 building experience.</p><a class="small-download" href="downloads/BLWS-Alpha-0.5.dmg" download>Download BLWS Alpha 0.5 →</a></article>
-      <article class="card"><h2 class="version">Alpha 0.3</h2><div class="date">DMG released September 3, 2026 · Officially released September 6, 2026</div><p>World seeds, Plains and Forest biomes, and a more complete building experience.</p><a class="small-download" href="downloads/BlockWorlds-Alpha-0.3.dmg" download>Download Alpha 0.3 →</a></article>
-      <article class="card"><h2 class="version">Alpha 0.2</h2><div class="date">DMG released September 3, 2026 · Officially released September 6, 2026</div><p>The pine wood, plants, stairs, doors, saplings, and bone meal update.</p><a class="small-download" href="downloads/BlockWorlds-Alpha-0.2.dmg" download>Download Alpha 0.2 →</a></article>
-      <article class="card"><h2 class="version">Alpha 0.1</h2><div class="date">DMG released September 3, 2026 · Officially released September 6, 2026</div><p>The first BlockWorlds Alpha release, featuring the core building experience.</p><a class="small-download" href="downloads/BlockWorlds-Alpha-0.1.dmg" download>Download Alpha 0.1 →</a></article>
-    </section>
+    <p class="subtitle" style="text-align:center;margin:-14px 0 26px">THE DOWNLOAD ALSO INCLUDES THAT VERSION'S RELEASE NOTES (.MD)</p>
 
     <section class="guide" aria-label="Installation guide">
       <h2>Installation guide</h2>
       <p><strong>BLWS</strong> is the current name of the game. <strong>BlockWorlds</strong> is its former name, used by Alpha 0.1–0.4 and some older files.</p>
       <h3>macOS</h3>
-      <ol><li>Download and open <code>BLWS Alpha 0.5.dmg</code>.</li><li>Drag <code>BLWS Alpha 0.5.app</code> to Applications.</li><li>Open Terminal and run the command below before the first launch.</li></ol>
-      <pre><code>mkdir -p "$HOME/Applications"
+      <ol><li>Download the version you want and drag its App to Applications.</li><li>Open Terminal and run the command below before the first launch. Enter <code>0.1</code>, <code>0.2</code>, <code>0.3</code>, <code>0.4</code>, or <code>0.5</code> when asked.</li></ol>
+      <pre><code>read "VERSION?Enter BLWS/BlockWorlds version (0.1, 0.2, 0.3, 0.4, or 0.5): "
+if [ "$VERSION" = "0.5" ]; then APP="BLWS Alpha 0.5.app"; else APP="Alpha $VERSION.app"; fi
+mkdir -p "$HOME/Applications"
 ditto --norsrc --noextattr --noqtn --noacl \
-  "/Applications/BLWS Alpha 0.5.app" \
-  "$HOME/Applications/BLWS Alpha 0.5.app"
-open "$HOME/Applications/BLWS Alpha 0.5.app"</code></pre>
-      <p>The command creates a clean personal copy and opens it. It is for BLWS downloaded from this official repository only.</p>
+  "/Applications/$APP" \
+  "$HOME/Applications/$APP"
+codesign --force --deep --sign - "$HOME/Applications/$APP"
+open "$HOME/Applications/$APP"</code></pre>
+      <p>The command creates a clean personal copy, applies a local ad-hoc signature, and opens it. It is for BLWS downloaded from this official repository only.</p>
       <h3>Windows</h3>
       <p>The Windows EXE release is currently in development. BLWS Alpha 0.5 is not officially released for Windows yet.</p>
     </section>
@@ -68,7 +64,10 @@ open "$HOME/Applications/BLWS Alpha 0.5.app"</code></pre>
   <script>
     const select=document.querySelector('#version');
     const button=document.querySelector('#download');
-    select.addEventListener('change',()=>{const file=select.value==='0.5'?'downloads/BLWS-Alpha-0.5.dmg':`downloads/BlockWorlds-Alpha-${select.value}.dmg`;button.href=file;button.textContent=`DOWNLOAD ALPHA ${select.value}`});
+    const files=version=>version==='0.5'?{dmg:'downloads/BLWS-Alpha-0.5.dmg',notes:'downloads/BLWS-Alpha-0.5-README.md'}:{dmg:`downloads/BlockWorlds-Alpha-${version}.dmg`,notes:`downloads/BlockWorlds-Alpha-${version}-README.md`};
+    const refresh=()=>{const file=files(select.value);button.href=file.dmg;button.textContent=`DOWNLOAD ALPHA ${select.value}`};
+    select.addEventListener('change',refresh);
+    button.addEventListener('click',()=>{const notes=files(select.value).notes;setTimeout(()=>{const a=document.createElement('a');a.href=notes;a.download='';document.body.appendChild(a);a.click();a.remove()},150)});
   </script>
 </body>
 </html>

@@ -11,19 +11,21 @@ BLWS is a voxel building game for macOS. It was formerly named **BlockWorlds**; 
 ## Download and install on macOS
 
 1. Open `index.html` or visit the download website.
-2. Select **BLWS Alpha 0.5** and download `BLWS Alpha 0.5.dmg`.
-3. Open the DMG and drag `BLWS Alpha 0.5.app` to Applications.
-4. Before first launch, open Terminal and run:
+2. Select the version you want and drag its App to Applications.
+3. Before first launch, open Terminal and run the following. Enter `0.1`, `0.2`, `0.3`, `0.4`, or `0.5` when asked:
 
 ```bash
+read "VERSION?Enter BLWS/BlockWorlds version (0.1, 0.2, 0.3, 0.4, or 0.5): "
+if [ "$VERSION" = "0.5" ]; then APP="BLWS Alpha 0.5.app"; else APP="Alpha $VERSION.app"; fi
 mkdir -p "$HOME/Applications"
 ditto --norsrc --noextattr --noqtn --noacl \
-  "/Applications/BLWS Alpha 0.5.app" \
-  "$HOME/Applications/BLWS Alpha 0.5.app"
-open "$HOME/Applications/BLWS Alpha 0.5.app"
+  "/Applications/$APP" \
+  "$HOME/Applications/$APP"
+codesign --force --deep --sign - "$HOME/Applications/$APP"
+open "$HOME/Applications/$APP"
 ```
 
-This makes a clean personal copy and opens it. Run this only for BLWS downloaded from this official repository.
+This makes a clean personal copy, applies a local ad-hoc signature, and opens it. Run this only for BLWS downloaded from this official repository.
 
 ## Older releases
 
